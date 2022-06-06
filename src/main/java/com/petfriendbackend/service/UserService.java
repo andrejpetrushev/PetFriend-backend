@@ -1,5 +1,7 @@
 package com.petfriendbackend.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.petfriendbackend.model.User;
@@ -13,4 +15,6 @@ public interface UserService {
     User validateUser(Login login);
 
     void register(User user);
+
+    UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException;
 }
