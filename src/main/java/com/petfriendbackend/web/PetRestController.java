@@ -46,7 +46,7 @@ public class PetRestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         this.petService.deleteById(id);
         if(this.petService.findById(id).isEmpty())
             return ResponseEntity.ok().build();

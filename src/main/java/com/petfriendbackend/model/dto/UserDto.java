@@ -1,10 +1,24 @@
 package com.petfriendbackend.model.dto;
 
-import com.petfriendbackend.model.User;
-import com.petfriendbackend.model.Login;
+import com.petfriendbackend.model.enumerations.Gender;
+import lombok.Data;
 
-public interface UserDto {
-    void register(User user);
+@Data
+public class UserDto {
 
-    User validateUser(Login login);
+    private String username;
+
+    private String password;
+
+    private String repeatPassword;
+
+    private String firstName;
+
+    private String lastName;
+
+    private Gender gender;
+
+    private String email;
+
+    private String role;
 }

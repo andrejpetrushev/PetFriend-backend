@@ -1,51 +1,85 @@
 package com.petfriendbackend.service.impl;
 
-import com.petfriendbackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import com.petfriendbackend.model.Login;
-import com.petfriendbackend.model.User;
-import com.petfriendbackend.repository.UserRepository;
 import com.petfriendbackend.model.Role;
+import com.petfriendbackend.model.User;
+import com.petfriendbackend.model.dto.UserDto;
+import com.petfriendbackend.model.exceptions.UserDoNotExistsException;
+import com.petfriendbackend.model.exceptions.UsernameAlreadyExistsException;
+import com.petfriendbackend.repository.UserRepository;
+import com.petfriendbackend.service.RoleService;
+import com.petfriendbackend.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    public UserRepository userRepo;
 
-    public void addUser(User user) {
-        userRepo.save(user);
-    }
+    private final UserRepository userRepository;
 
-    public User validateUser(Login login) {
-        return userRepo.findById(login.getUsername()).get();
+    private final PasswordEncoder passwordEncoder;
+
+    private final RoleService roleService;
+
+    @Override
+    public List<User> getAll() {
+        return this.userRepository.findAll();
     }
 
     @Override
-    public void register(User user) {
-
+    public User getById(Long id) {
+        return this.userRepository.findById(id)
+                .orElseThrow(UserDoNotExistsException::new);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        User user = UserRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with username or email:" + usernameOrEmail));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getEncrytedPassword(), mapRolesToAuthorities(user.getRoles()));
+    public User register(UserDto userDto) {
+
+        if (userRepository.existsByUsername(userDto.getUsername())) {
+            throw new UsernameAlreadyExistsException(userDto.getUsername());
+        }
+        Role role = this.roleService.getRoleByName("ROLE_USER");
+        User user = new User(userDto.getUsername(),userDto.getFirstName(), userDto.getLastName(),
+                userDto.getGender(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
+                Collections.singleton(role));
+
+        return this.userRepository.save(user);
     }
 
-    private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    @Override
+    public User update(Long id, UserDto userDto) {
+        User user = this.getById(id);
+        String firstName = userDto.getFirstName();
+        String lastName = userDto.getLastName();
+
+        if (Objects.nonNull(firstName)) {
+            user.setFirstName(firstName);
+        }
+        if (Objects.nonNull(lastName)) {
+            user.setLastName(lastName);
+        }
+
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public User delete(Long id) {
+        User user = this.getById(id);
+
+        this.userRepository.delete(user);
+
+        return user;
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return this.userRepository.findByUsername(username)
+                .orElseThrow(UserDoNotExistsException::new);
     }
 }
-

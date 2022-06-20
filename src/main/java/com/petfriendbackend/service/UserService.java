@@ -1,20 +1,22 @@
 package com.petfriendbackend.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import com.petfriendbackend.model.User;
-import com.petfriendbackend.model.Login;
+import com.petfriendbackend.model.dto.UserDto;
 
-@Service
+import java.util.List;
+
 public interface UserService {
 
-    void addUser(User user);
+    List<User> getAll();
 
-    User validateUser(Login login);
+    User getById(Long id);
 
-    void register(User user);
+    User register(UserDto userDto);
 
-    UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException;
+    User update(Long id, UserDto userDto);
+
+    User delete(Long id);
+
+    User findByUsername(String username);
 }
