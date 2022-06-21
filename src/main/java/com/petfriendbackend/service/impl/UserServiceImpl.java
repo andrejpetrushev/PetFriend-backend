@@ -8,6 +8,7 @@ import com.petfriendbackend.model.exceptions.UsernameAlreadyExistsException;
 import com.petfriendbackend.repository.UserRepository;
 import com.petfriendbackend.service.RoleService;
 import com.petfriendbackend.service.UserService;
+import com.petfriendbackend.service.forms.UserForm;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,13 @@ public class UserServiceImpl implements UserService {
                 Collections.singleton(role));
 
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public User add(UserForm userForm) {
+        User user = User.build(userForm.getUserName(),userForm.getFirstName(),userForm.getLastName(),userForm.getGender(),userForm.getEmail(),userForm.getPassword(),userForm.getRoles());
+        userRepository.save(user);
+        return user;
     }
 
     @Override

@@ -1,10 +1,15 @@
 package com.petfriendbackend.service.impl;
 
 import com.petfriendbackend.model.Role;
+import com.petfriendbackend.model.User;
 import com.petfriendbackend.repository.RoleRepository;
+import com.petfriendbackend.repository.UserRepository;
 import com.petfriendbackend.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor

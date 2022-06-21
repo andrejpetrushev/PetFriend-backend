@@ -46,4 +46,17 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
+
+    public static User build(String username, String firstName, String lastName, Gender gender, String email, String password,
+                             Set<Role> roles) {
+        User user = new User();
+        user.username = username;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.gender = gender;
+        user.email = email;
+        user.password = password;
+        user.roles = roles;
+        return user;
+    }
 }
