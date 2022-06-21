@@ -3,10 +3,7 @@ package com.petfriendbackend.model;
 import com.petfriendbackend.model.enumerations.Gender;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -25,6 +22,9 @@ public class Pet {
     private String description;
 
     private String image;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private User user;
 
     public Pet() {
     }
