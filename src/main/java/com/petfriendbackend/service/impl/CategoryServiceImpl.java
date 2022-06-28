@@ -76,6 +76,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void delete(String name) {
         if (name==null || name.isEmpty()) {
             throw new IllegalArgumentException();
