@@ -1,15 +1,13 @@
 package com.petfriendbackend.service.impl;
 
 import com.petfriendbackend.model.Role;
-import com.petfriendbackend.model.User;
 import com.petfriendbackend.repository.RoleRepository;
-import com.petfriendbackend.repository.UserRepository;
 import com.petfriendbackend.service.RoleService;
+import com.petfriendbackend.model.Category;
+import com.petfriendbackend.repository.CategoryRepository;
+import com.petfriendbackend.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -31,5 +29,10 @@ public class RoleServiceImpl implements RoleService {
    @Override
    public Role getRoleByName(String name) {
       return this.roleRepository.findByName(name).orElse(null);
+   }
+
+   @Override
+   public Role getRoleByCategory(String category) {
+      return this.roleRepository.findByCategory(category).orElse(null);
    }
 }
