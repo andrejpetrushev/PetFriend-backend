@@ -39,6 +39,14 @@ public class UserForm {
     @NotEmpty
     private Set<Role> roles;
 
+    @Valid
+    @NotEmpty
+    private byte[] image;
+
+    @Valid
+    @NotEmpty
+    private String description;
+
     public String getUserName() {
         return userName;
     }
@@ -66,4 +74,9 @@ public class UserForm {
     public Set<Role> getRoles() {
         return roles;
     }
+
+    public String getDescription(){return description;}
+
+    public byte[] getImage(){return image;}
+
 }

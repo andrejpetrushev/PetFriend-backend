@@ -33,11 +33,15 @@ public class User {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Role> roles;
 
+    private byte[] image;
+
+    private String description;
+
     public User(String username, String firstName, String lastName, Gender gender, String email, String password,
-                Set<Role> roles) {
+                Set<Role> roles, byte[] image, String description) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,10 +49,12 @@ public class User {
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.image=image;
+        this.description=description;
     }
 
     public static User build(String username, String firstName, String lastName, Gender gender, String email, String password,
-                             Set<Role> roles) {
+                             Set<Role> roles, byte[] image, String description) {
         User user = new User();
         user.username = username;
         user.firstName = firstName;
@@ -57,6 +63,8 @@ public class User {
         user.email = email;
         user.password = password;
         user.roles = roles;
+        user.image=image;
+        user.description=description;
         return user;
     }
 }

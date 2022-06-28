@@ -48,14 +48,14 @@ public class UserServiceImpl implements UserService {
         Role role = this.roleService.getRoleByName("ROLE_USER");
         User user = new User(userDto.getUsername(),userDto.getFirstName(), userDto.getLastName(),
                 userDto.getGender(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
-                Collections.singleton(role));
+                Collections.singleton(role), userDto.getImage(), userDto.getDescription());
 
         return this.userRepository.save(user);
     }
 
     @Override
     public User add(UserForm userForm) {
-        User user = User.build(userForm.getUserName(),userForm.getFirstName(),userForm.getLastName(),userForm.getGender(),userForm.getEmail(),userForm.getPassword(),userForm.getRoles());
+        User user = User.build(userForm.getUserName(),userForm.getFirstName(),userForm.getLastName(),userForm.getGender(),userForm.getEmail(),userForm.getPassword(),userForm.getRoles(), userForm.getImage(), userForm.getDescription());
         userRepository.save(user);
         return user;
     }
