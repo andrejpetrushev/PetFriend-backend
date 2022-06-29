@@ -1,6 +1,7 @@
 package com.petfriendbackend.service;
 
 
+import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.Role;
 
 public interface RoleService {
@@ -11,5 +12,5 @@ public interface RoleService {
 
    Role getRoleByName(String name);
 
-    Role getRoleByCategory(String category);
+    Role getRoleByCategory(Category name);
 }

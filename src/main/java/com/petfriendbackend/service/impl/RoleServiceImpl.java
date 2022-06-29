@@ -4,8 +4,6 @@ import com.petfriendbackend.model.Role;
 import com.petfriendbackend.repository.RoleRepository;
 import com.petfriendbackend.service.RoleService;
 import com.petfriendbackend.model.Category;
-import com.petfriendbackend.repository.CategoryRepository;
-import com.petfriendbackend.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
    }
 
    @Override
-   public Role getRoleByCategory(String category) {
-      return this.roleRepository.findByCategory(category).orElse(null);
+   public Role getRoleByCategory(Category name) {
+      return this.roleRepository.findByCategory(name).orElse(null);
    }
 }
