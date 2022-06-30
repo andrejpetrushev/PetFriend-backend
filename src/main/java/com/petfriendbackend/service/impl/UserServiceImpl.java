@@ -3,6 +3,7 @@ package com.petfriendbackend.service.impl;
 import com.petfriendbackend.model.Role;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
+import com.petfriendbackend.model.exceptions.InvalidArgumentsException;
 import com.petfriendbackend.model.exceptions.UserDoNotExistsException;
 import com.petfriendbackend.model.exceptions.UsernameAlreadyExistsException;
 import com.petfriendbackend.repository.UserRepository;
@@ -13,10 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -48,7 +46,8 @@ public class UserServiceImpl implements UserService {
         Role role = this.roleService.getRoleByName("ROLE_USER");
         User user = new User(userDto.getUsername(),userDto.getFirstName(), userDto.getLastName(),
                 userDto.getGender(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
-                Collections.singleton(role), userDto.getImage(), userDto.getDescription());
+                Collections.singleton(role), userDto.getImage(), userDto.getDescription(),
+                userDto.getLocation(), userDto.getReservation());
 
         return this.userRepository.save(user);
     }
@@ -89,5 +88,11 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return this.userRepository.findByUsername(username)
                 .orElseThrow(UserDoNotExistsException::new);
+    }
+
+    @Override
+    public User findAllByRoleAndReservation(Set<Role> roles, String location) {
+        return this.userRepository.findAllByRolesAndLocation(roles, location)
+                .orElseThrow(InvalidArgumentsException::new);
     }
 }

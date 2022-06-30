@@ -40,8 +40,12 @@ public class User {
 
     private String description;
 
+    private String location;
+
+    private String reservation;
+
     public User(String username, String firstName, String lastName, Gender gender, String email, String password,
-                Set<Role> roles, byte[] image, String description) {
+                Set<Role> roles, byte[] image, String description, String location, String reservation) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,6 +55,8 @@ public class User {
         this.roles = roles;
         this.image=image;
         this.description=description;
+        this.reservation=reservation;
+        this.location=location;
     }
 
     public static User build(String username, String firstName, String lastName, Gender gender, String email, String password,

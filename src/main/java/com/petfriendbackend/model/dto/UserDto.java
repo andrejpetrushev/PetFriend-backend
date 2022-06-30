@@ -26,4 +26,8 @@ public class UserDto {
 
     private String description;
 
+    private String location;
+
+    private String reservation;
+
 }

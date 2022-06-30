@@ -2,6 +2,7 @@ package com.petfriendbackend.web;
 
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
+import com.petfriendbackend.model.dto.UserFilterDto;
 import com.petfriendbackend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,4 +43,11 @@ public class UserRestController {
         User user = this.userService.delete(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @GetMapping("/byRoleAndLocation")
+    public ResponseEntity<User> getAllByLocationAndRole(@RequestBody UserFilterDto userDto) {
+        User findByRoleAndLocation=this.userService.findAllByRoleAndReservation(userDto.getRoles(), userDto.getLocation());
+        return new ResponseEntity<>(findByRoleAndLocation, HttpStatus.OK);
+    }
+
 }
