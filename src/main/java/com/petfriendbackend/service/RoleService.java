@@ -12,5 +12,4 @@ public interface RoleService {
 
    Role getRoleByName(String name);
 
-    //Role getRoleByCategory(Category name);
 }

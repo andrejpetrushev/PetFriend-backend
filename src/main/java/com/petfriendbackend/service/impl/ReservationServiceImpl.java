@@ -15,8 +15,8 @@ import com.petfriendbackend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -77,5 +77,12 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         reservation.setConfirmation(confirmationDto.getConfirmation());
+    }
+
+    @Override
+    public List<Reservation> findByPetSitterAndCategory(User petSitter, List<Category> categories) {
+        Role role_pet_sitter = this.roleService.getRoleByName("ROLE_PET_SITTER");
+
+        return this.reservationRepository.findByPetSitterAndCategory(petSitter, categories);
     }
 }
