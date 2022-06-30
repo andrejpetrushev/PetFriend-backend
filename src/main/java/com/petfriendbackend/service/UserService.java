@@ -24,5 +24,5 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    User findAllByRoleAndReservation(Set<Role> roles, String location);
+    User findAllByRoleAndLocation(Set<Role> roles, String location);
 }

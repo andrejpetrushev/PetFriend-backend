@@ -46,7 +46,7 @@ public class UserRestController {
 
     @GetMapping("/byRoleAndLocation")
     public ResponseEntity<User> getAllByLocationAndRole(@RequestBody UserFilterDto userDto) {
-        User findByRoleAndLocation=this.userService.findAllByRoleAndReservation(userDto.getRoles(), userDto.getLocation());
+        User findByRoleAndLocation=this.userService.findAllByRoleAndLocation(userDto.getRoles(), userDto.getLocation());
         return new ResponseEntity<>(findByRoleAndLocation, HttpStatus.OK);
     }
 

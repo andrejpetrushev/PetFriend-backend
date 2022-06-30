@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findAllByRoleAndReservation(Set<Role> roles, String location) {
+    public User findAllByRoleAndLocation(Set<Role> roles, String location) {
         return this.userRepository.findAllByRolesAndLocation(roles, location)
                 .orElseThrow(InvalidArgumentsException::new);
     }
