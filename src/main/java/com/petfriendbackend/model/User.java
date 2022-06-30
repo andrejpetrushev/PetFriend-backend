@@ -40,8 +40,13 @@ public class User {
 
     private String description;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Category> categories;
+
+    private double rating;
+
     public User(String username, String firstName, String lastName, Gender gender, String email, String password,
-                Set<Role> roles, byte[] image, String description) {
+                Set<Role> roles, byte[] image, String description, List<Category> categories, double rating) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,10 +56,12 @@ public class User {
         this.roles = roles;
         this.image=image;
         this.description=description;
+        this.categories = categories;
+        this.rating = rating;
     }
 
     public static User build(String username, String firstName, String lastName, Gender gender, String email, String password,
-                             Set<Role> roles, byte[] image, String description) {
+                             Set<Role> roles, byte[] image, String description, List<Category> categories, double rating) {
         User user = new User();
         user.username = username;
         user.firstName = firstName;
@@ -65,6 +72,20 @@ public class User {
         user.roles = roles;
         user.image=image;
         user.description=description;
+        user.categories = categories;
+        user.rating = rating;
         return user;
+    }
+
+    public void addCategory(Category category, Long id){
+
+        if(category.getId().equals(id)){
+            categories.add(category);
+        }
+    }
+
+    public void addRating(double rating){
+
+        this.rating = rating;
     }
 }

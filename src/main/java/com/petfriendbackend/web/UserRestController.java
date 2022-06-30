@@ -1,5 +1,6 @@
 package com.petfriendbackend.web;
 
+import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
 import com.petfriendbackend.service.UserService;
@@ -41,5 +42,17 @@ public class UserRestController {
     public ResponseEntity<User> deleteUser(@PathVariable Long id) {
         User user = this.userService.delete(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/addCategory/{id}")
+    public ResponseEntity<User> addCategoryToUser(@PathVariable Long id){
+        User user = this.userService.addCategoryForPetSitter(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/ratePetSitter/{id}")
+    public ResponseEntity<Double> ratePetSitter(@PathVariable Long id){
+        double rating = this.userService.petSitterRating(id);
+        return new ResponseEntity<>(rating, HttpStatus.OK);
     }
 }

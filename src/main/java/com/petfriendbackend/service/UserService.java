@@ -1,5 +1,6 @@
 package com.petfriendbackend.service;
 
+import com.petfriendbackend.model.Role;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
 import com.petfriendbackend.service.forms.UserForm;
@@ -21,4 +22,8 @@ public interface UserService {
     User delete(Long id);
 
     User findByUsername(String username);
+
+    User addCategoryForPetSitter(Long id);
+
+    double petSitterRating(Long id);
 }

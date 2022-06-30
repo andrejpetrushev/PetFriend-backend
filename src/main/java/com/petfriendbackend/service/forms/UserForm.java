@@ -1,11 +1,13 @@
 package com.petfriendbackend.service.forms;
 
 
+import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.Role;
 import com.petfriendbackend.model.enumerations.Gender;
 import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -47,6 +49,14 @@ public class UserForm {
     @NotEmpty
     private String description;
 
+    @Valid
+    @NotEmpty
+    private List<Category> categories;
+
+    @Valid
+    @NotEmpty
+    private double rating;
+
     public String getUserName() {
         return userName;
     }
@@ -79,5 +89,11 @@ public class UserForm {
 
     public byte[] getImage(){return image;}
 
+    public List<Category> getCategories() {
+        return categories;
+    }
 
+    public double getRating() {
+        return rating;
+    }
 }

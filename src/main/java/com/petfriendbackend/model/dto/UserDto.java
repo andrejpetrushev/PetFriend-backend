@@ -1,7 +1,10 @@
 package com.petfriendbackend.model.dto;
 
+import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.enumerations.Gender;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserDto {
@@ -25,5 +28,9 @@ public class UserDto {
     private byte[] image;
 
     private String description;
+
+    private List<Category> category;
+
+    private double rating;
 
 }
