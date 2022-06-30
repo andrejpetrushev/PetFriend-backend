@@ -3,6 +3,7 @@ package com.petfriendbackend.web;
 import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
+import com.petfriendbackend.model.dto.UserFilterDto;
 import com.petfriendbackend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,12 @@ public class UserRestController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/byRoleAndLocation")
+    public ResponseEntity<User> getAllByLocationAndRole(@RequestBody UserFilterDto userDto) {
+        User findByRoleAndLocation=this.userService.findAllByRoleAndLocation(userDto.getRoles(), userDto.getLocation());
+        return new ResponseEntity<>(findByRoleAndLocation, HttpStatus.OK);
+    }
+
     @PostMapping("/addCategory/{id}")
     public ResponseEntity<User> addCategoryToUser(@PathVariable Long id){
         User user = this.userService.addCategoryForPetSitter(id);
@@ -55,4 +62,5 @@ public class UserRestController {
         double rating = this.userService.petSitterRating(id);
         return new ResponseEntity<>(rating, HttpStatus.OK);
     }
+
 }

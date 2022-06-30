@@ -4,7 +4,11 @@ import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.Role;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
+
 import com.petfriendbackend.model.enumerations.Gender;
+
+import com.petfriendbackend.model.exceptions.InvalidArgumentsException;
+
 import com.petfriendbackend.model.exceptions.UserDoNotExistsException;
 import com.petfriendbackend.model.exceptions.UsernameAlreadyExistsException;
 import com.petfriendbackend.repository.UserRepository;
@@ -47,14 +51,14 @@ public class UserServiceImpl implements UserService {
         Role role = this.roleService.getRoleByName("ROLE_USER");
         User user = new User(userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(),
                 userDto.getGender(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
-                Collections.singleton(role), userDto.getImage(), userDto.getDescription(), userDto.getCategory(), userDto.getRating());
+                Collections.singleton(role), userDto.getImage(), userDto.getDescription(), userDto.getLocation(), userDto.getReservation(), userDto.getCategory(), userDto.getRating());
 
         return this.userRepository.save(user);
     }
 
     @Override
     public User add(UserForm userForm) {
-        User user = User.build(userForm.getUserName(), userForm.getFirstName(), userForm.getLastName(), userForm.getGender(), userForm.getEmail(), userForm.getPassword(), userForm.getRoles(), userForm.getImage(), userForm.getDescription(), userForm.getCategories(), userForm.getRating());
+        User user = User.build(userForm.getUserName(), userForm.getFirstName(), userForm.getLastName(), userForm.getGender(), userForm.getEmail(), userForm.getPassword(), userForm.getRoles(), userForm.getImage(), userForm.getDescription(), userForm.getLocation(), userForm.getReservation(), userForm.getCategories(), userForm.getRating());
         userRepository.save(user);
         return user;
     }
@@ -91,6 +95,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findAllByRoleAndLocation(Set<Role> roles, String location) {
+        return this.userRepository.findAllByRolesAndLocation(roles, location)
+                .orElseThrow(InvalidArgumentsException::new);
+    }
+
+    @Override
     public User addCategoryForPetSitter(Long id) {
         User user = new User();
 
@@ -102,12 +112,11 @@ public class UserServiceImpl implements UserService {
                     }
                 }
             }
-
         }
         return user;
     }
 
-    public double petSitterRating(Long id) {
+    public double petSitterRating (Long id){
         User user1 = new User();
         User user2 = new User();
         double ratingsTotal = 0;
@@ -132,4 +141,3 @@ public class UserServiceImpl implements UserService {
         return userRating;
     }
 }
-

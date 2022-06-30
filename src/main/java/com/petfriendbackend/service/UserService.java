@@ -6,6 +6,7 @@ import com.petfriendbackend.model.dto.UserDto;
 import com.petfriendbackend.service.forms.UserForm;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -22,6 +23,8 @@ public interface UserService {
     User delete(Long id);
 
     User findByUsername(String username);
+
+    User findAllByRoleAndLocation(Set<Role> roles, String location);
 
     User addCategoryForPetSitter(Long id);
 

@@ -51,6 +51,14 @@ public class UserForm {
 
     @Valid
     @NotEmpty
+    private String location;
+
+    @Valid
+    @NotEmpty
+    private String reservation;
+
+    @Valid
+    @NotEmpty
     private List<Category> categories;
 
     @Valid
@@ -85,9 +93,13 @@ public class UserForm {
         return roles;
     }
 
-    public String getDescription(){return description;}
+    public String getDescription() {return description; }
 
-    public byte[] getImage(){return image;}
+    public byte[] getImage() { return image; }
+
+    public String getLocation() { return location; }
+
+    public String getReservation() { return reservation; }
 
     public List<Category> getCategories() {
         return categories;

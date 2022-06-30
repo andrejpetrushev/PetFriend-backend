@@ -29,8 +29,11 @@ public class UserDto {
 
     private String description;
 
+    private String location;
+
+    private String reservation;
+
     private List<Category> category;
 
     private double rating;
-
 }
