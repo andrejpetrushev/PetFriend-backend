@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
-public class AuthController {
+public class AuthRestController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
 

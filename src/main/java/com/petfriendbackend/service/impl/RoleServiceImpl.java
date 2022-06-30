@@ -29,8 +29,8 @@ public class RoleServiceImpl implements RoleService {
       return this.roleRepository.findByName(name).orElse(null);
    }
 
-   @Override
-   public Role getRoleByCategory(Category name) {
-      return this.roleRepository.findByCategory(name).orElse(null);
-   }
+//   @Override
+//   public Role getRoleByCategory(Category name) {
+//      return this.roleRepository.findByCategory(name).orElse(null);
+//   }
 }
