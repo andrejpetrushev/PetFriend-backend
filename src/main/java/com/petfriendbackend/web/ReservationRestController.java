@@ -39,7 +39,7 @@ public class ReservationRestController {
         this.reservationService.confirmReservation(confirmationDto);
     }
 
-    @GetMapping
+    @GetMapping("/byUser")
     public ResponseEntity<List<Reservation>> findByUser(Principal principal) {
         User user = this.userService.findByUsername(principal.getName());
         List<Reservation> reservations = this.reservationService.findByUser(user);
@@ -47,12 +47,10 @@ public class ReservationRestController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Category>> findByPetSitterAndCategories(User petSitter) {
-        User user = this.userService.findByUsername(petSitter.getUsername());
-        List<Category> categories = this.categoryService.listCategories();
-
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    @GetMapping("/byPetSitterAndCategories")
+    public ResponseEntity<List<Reservation>> findByPetSitterAndCategories(@RequestBody ReservationDto reservationDto) {
+        List<Reservation> reservations=this.reservationService.findByPetSitterAndCategories(reservationDto.getSitterId(),
+                reservationDto.getCategories());
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
-
 }

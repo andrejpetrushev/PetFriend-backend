@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -95,10 +96,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findAllByRoleAndLocation(Set<Role> roles, String location) {
-        return this.userRepository.findAllByRolesAndLocation(roles, location)
-                .orElseThrow(InvalidArgumentsException::new);
+    public List<User> findAllByLocationAndRole(String location, String role) {
+        Role role1=this.roleService.getRoleByName(role);
+        List<User> users=this.userRepository.findAllByLocation(location);
+        return users.stream().filter(x -> x.getRoles().contains(role1)).collect(Collectors.toList());
     }
+
 
     @Override
     public User addCategoryForPetSitter(Long id) {

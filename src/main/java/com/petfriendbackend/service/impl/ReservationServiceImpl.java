@@ -79,8 +79,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByPetSitterAndCategories(User petSitter, List<Category> categories) {
-
-        return this.reservationRepository.findByPetSitterAndCategories(petSitter, categories);
+    public List<Reservation> findByPetSitterAndCategories(Long petSitterId, List<Long> categories) {
+        User user=this.userService.getById(petSitterId);
+        return this.reservationRepository.findAllByCategoriesAndPetSitter(categories, user);
     }
 }

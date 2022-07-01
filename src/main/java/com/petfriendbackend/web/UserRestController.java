@@ -46,9 +46,9 @@ public class UserRestController {
     }
 
     @GetMapping("/byRoleAndLocation")
-    public ResponseEntity<User> getAllByLocationAndRole(@RequestBody UserFilterDto userDto) {
-        User findByRoleAndLocation=this.userService.findAllByRoleAndLocation(userDto.getRoles(), userDto.getLocation());
-        return new ResponseEntity<>(findByRoleAndLocation, HttpStatus.OK);
+    public ResponseEntity<List<User>> getAllByLocationAndRole(@RequestBody UserFilterDto userDto) {
+        List<User> findByRoleAndLocation=this.userService.findAllByLocationAndRole(userDto.getRole(), userDto.getLocation());
+        return new ResponseEntity<List<User>>(findByRoleAndLocation, HttpStatus.OK);
     }
 
     @PostMapping("/addCategory/{id}")

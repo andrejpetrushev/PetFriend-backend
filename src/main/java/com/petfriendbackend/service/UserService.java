@@ -24,7 +24,7 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    User findAllByRoleAndLocation(Set<Role> roles, String location);
+    List<User> findAllByLocationAndRole(String location, String role);
 
     User addCategoryForPetSitter(Long id);
 

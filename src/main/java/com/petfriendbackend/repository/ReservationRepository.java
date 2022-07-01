@@ -14,5 +14,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByPetOwnerAndPetSitter(User petOwner, User petSitter);
 
-    List<Reservation> findByPetSitterAndCategories(User petSitter, List<Category> categories);
+    List<Reservation> findAllByCategoriesAndPetSitter(List<Long> categories, User petSitter);
 }
