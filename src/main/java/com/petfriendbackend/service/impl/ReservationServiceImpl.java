@@ -15,6 +15,7 @@ import com.petfriendbackend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -80,7 +81,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findByPetSitterAndCategories(Long petSitterId, List<Long> categories) {
-        User user=this.userService.getById(petSitterId);
-        return this.reservationRepository.findAllByCategoriesAndPetSitter(categories, user);
+        User user = this.userService.getById(petSitterId);
+        List<Category> categoryList = this.categoryRepository.findAllById(categories);
+        return this.reservationRepository.findAllByPetSitterAndCategoriesIn(user, Collections.singleton(categoryList));
     }
 }
