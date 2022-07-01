@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -49,9 +48,9 @@ public class ReservationRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findByPetSitterAndCategory(User petSitter, List<Category> categories) {
+    public ResponseEntity<List<Category>> findByPetSitterAndCategories(User petSitter) {
         User user = this.userService.findByUsername(petSitter.getUsername());
-        List<Category> category = this.categoryService.listCategories();
+        List<Category> categories = this.categoryService.listCategories();
 
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }

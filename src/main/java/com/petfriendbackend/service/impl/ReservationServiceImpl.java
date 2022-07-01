@@ -6,6 +6,7 @@ import com.petfriendbackend.model.Role;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.ConfirmationDto;
 import com.petfriendbackend.model.dto.ReservationDto;
+import com.petfriendbackend.model.exceptions.InvalidArgumentsException;
 import com.petfriendbackend.model.exceptions.ReservationNotFoundException;
 import com.petfriendbackend.repository.CategoryRepository;
 import com.petfriendbackend.repository.ReservationRepository;
@@ -16,7 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -81,8 +81,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findByPetSitterAndCategory(User petSitter, List<Category> categories) {
-        Role role_pet_sitter = this.roleService.getRoleByName("ROLE_PET_SITTER");
 
-        return this.reservationRepository.findByPetSitterAndCategory(petSitter, categories);
+        return this.reservationRepository.findByPetSitterAndCategories(petSitter, categories);
     }
 }
