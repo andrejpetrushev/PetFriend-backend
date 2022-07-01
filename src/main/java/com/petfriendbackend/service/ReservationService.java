@@ -21,6 +21,5 @@ public interface ReservationService {
 
     void confirmReservation(ConfirmationDto confirmationDto);
 
-
-    List<Reservation> findByPetSitterAndCategory(User petSitter, List<Category> categories);
+    List<Reservation> findByPetSitterAndCategories(User petSitter, List<Category> categories);
 }

@@ -6,7 +6,6 @@ import com.petfriendbackend.model.Role;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.ConfirmationDto;
 import com.petfriendbackend.model.dto.ReservationDto;
-import com.petfriendbackend.model.exceptions.InvalidArgumentsException;
 import com.petfriendbackend.model.exceptions.ReservationNotFoundException;
 import com.petfriendbackend.repository.CategoryRepository;
 import com.petfriendbackend.repository.ReservationRepository;
@@ -80,7 +79,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByPetSitterAndCategory(User petSitter, List<Category> categories) {
+    public List<Reservation> findByPetSitterAndCategories(User petSitter, List<Category> categories) {
 
         return this.reservationRepository.findByPetSitterAndCategories(petSitter, categories);
     }
