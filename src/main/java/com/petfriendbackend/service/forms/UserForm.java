@@ -65,6 +65,11 @@ public class UserForm {
     @NotEmpty
     private double rating;
 
+
+    @Valid
+    @NotEmpty
+    private String role;
+
     public String getUserName() {
         return userName;
     }
@@ -108,4 +113,6 @@ public class UserForm {
     public double getRating() {
         return rating;
     }
+
+    public String getRole() {return role;}
 }

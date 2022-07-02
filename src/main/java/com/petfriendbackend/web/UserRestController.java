@@ -1,6 +1,5 @@
 package com.petfriendbackend.web;
 
-import com.petfriendbackend.model.Category;
 import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.UserDto;
 import com.petfriendbackend.model.dto.UserFilterDto;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:3000")
+@AllArgsConstructor
 public class UserRestController {
 
     private final UserService userService;
@@ -45,7 +44,7 @@ public class UserRestController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/byRoleAndLocation")
+    @PostMapping("/byRoleAndLocation")
     public ResponseEntity<List<User>> getAllByLocationAndRole(@RequestBody UserFilterDto userDto) {
         List<User> findByRoleAndLocation=this.userService.findAllByLocationAndRole(userDto.getRole(), userDto.getLocation());
         return new ResponseEntity<List<User>>(findByRoleAndLocation, HttpStatus.OK);

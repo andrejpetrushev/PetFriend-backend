@@ -49,17 +49,17 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsername(userDto.getUsername())) {
             throw new UsernameAlreadyExistsException(userDto.getUsername());
         }
-        Role role = this.roleService.getRoleByName("ROLE_USER");
         User user = new User(userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(),
                 userDto.getGender(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
-                Collections.singleton(role), userDto.getImage(), userDto.getDescription(), userDto.getLocation(), userDto.getReservation(), userDto.getCategory(), userDto.getRating());
+                userDto.getImage(), userDto.getDescription(), userDto.getLocation(), userDto.getReservation(), userDto.getCategory(), userDto.getRating(), userDto.getRole());
 
         return this.userRepository.save(user);
     }
 
     @Override
     public User add(UserForm userForm) {
-        User user = User.build(userForm.getUserName(), userForm.getFirstName(), userForm.getLastName(), userForm.getGender(), userForm.getEmail(), userForm.getPassword(), userForm.getRoles(), userForm.getImage(), userForm.getDescription(), userForm.getLocation(), userForm.getReservation(), userForm.getCategories(), userForm.getRating());
+        User user = User.build(userForm.getUserName(), userForm.getFirstName(), userForm.getLastName(), userForm.getGender(), userForm.getEmail(), userForm.getPassword(), userForm.getRoles(), userForm.getImage(), userForm.getDescription(), userForm.getLocation(), userForm.getReservation(), userForm.getCategories(), userForm.getRating(),
+                userForm.getRole());
         userRepository.save(user);
         return user;
     }
@@ -96,10 +96,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllByLocationAndRole(String location, String role) {
-        Role role1=this.roleService.getRoleByName(role);
-        List<User> users=this.userRepository.findAllByLocation(location);
-        return users.stream().filter(x -> x.getRoles().contains(role1)).collect(Collectors.toList());
+    public List<User> findAllByLocationAndRole(String role, String location) {
+//        Role role1=this.roleService.getRoleByName(role);
+        List<User> users = this.userRepository.findAllByLocationAndRole(location, role);
+        return users;
+//        return users.stream().filter(x -> x.getRoles().contains(role1)).collect(Collectors.toList());
     }
 
 
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public double petSitterRating (Long id){
+    public double petSitterRating(Long id) {
         User user1 = new User();
         User user2 = new User();
         double ratingsTotal = 0;

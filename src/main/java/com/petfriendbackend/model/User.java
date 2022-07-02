@@ -48,9 +48,12 @@ public class User {
     private List<Category> categories;
 
     private double rating;
+    private String role;
+    private String picture;
 
     public User(String username, String firstName, String lastName, Gender gender, String email, String password,
-                Set<Role> roles, byte[] image, String description, String location, String reservation, List<Category> categories, double rating) {
+                Set<Role> roles, byte[] image, String description, String location, String reservation, List<Category> categories, double rating,
+                String role) {
 
         this.username = username;
         this.firstName = firstName;
@@ -65,10 +68,29 @@ public class User {
         this.location=location;
         this.categories = categories;
         this.rating = rating;
+        this.role=role;
+    }
+    public User(String username, String firstName, String lastName, Gender gender, String email, String password,
+                 byte[] image, String description, String location, String reservation, List<Category> categories, double rating,
+                String role) {
+
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.image=image;
+        this.description=description;
+        this.reservation=reservation;
+        this.location=location;
+        this.categories = categories;
+        this.rating = rating;
+        this.role=role;
     }
 
     public static User build(String username, String firstName, String lastName, Gender gender, String email, String password,
-                             Set<Role> roles, byte[] image, String description, String location, String reservation, List<Category> categories, double rating) {
+                             Set<Role> roles, byte[] image, String description, String location, String reservation, List<Category> categories, double rating, String role) {
         User user = new User();
         user.username = username;
         user.firstName = firstName;
@@ -83,6 +105,7 @@ public class User {
         user.reservation = reservation;
         user.categories = categories;
         user.rating = rating;
+        user.role=role;
         return user;
     }
 
