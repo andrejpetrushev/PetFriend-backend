@@ -6,7 +6,6 @@ import com.petfriendbackend.model.dto.UserDto;
 import com.petfriendbackend.service.forms.UserForm;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserService {
 
@@ -29,4 +28,6 @@ public interface UserService {
     User addCategoryForPetSitter(Long id);
 
     double petSitterRating(Long id);
+
+    User findByFirstName(String firstName);
 }

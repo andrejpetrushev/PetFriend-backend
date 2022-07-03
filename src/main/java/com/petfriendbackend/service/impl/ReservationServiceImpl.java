@@ -13,10 +13,12 @@ import com.petfriendbackend.service.ReservationService;
 import com.petfriendbackend.service.RoleService;
 import com.petfriendbackend.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -37,15 +39,19 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation create(ReservationDto reservationDto) {
-        User petOwner = userService.getById(reservationDto.getOwnerId());
-        User petSitter = userService.getById(reservationDto.getSitterId());
-        List<Category> categories = categoryRepository.findAllById(reservationDto.getCategories());
+        User petSitter = userService.findByFirstName(reservationDto.getSitter());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "petOwner";
+        if (principal instanceof User) {
+            username = ((User) principal).getUsername();
+        }
+        User petOwner = userService.findByUsername(username);
 
         Reservation reservation = Reservation.builder()
                 .date(reservationDto.getDate())
                 .petOwner(petOwner)
                 .petSitter(petSitter)
-                .categories(categories).build();
+                .build();
 
         return this.reservationRepository.save(reservation);
     }
@@ -58,14 +64,15 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByUser(User user) {
-        Role role_pet_owner = this.roleService.getRoleByName("ROLE_PET_OWNER");
+    public List<Reservation> findByPetOwner() {
+        User petOwner = userService.findByUsername("petOwner");
+        return this.reservationRepository.findByPetOwner(petOwner);
+    }
 
-        if (user.getRoles().contains(role_pet_owner)) {
-            return this.reservationRepository.findByPetOwner(user);
-        }
-
-        return this.reservationRepository.findByPetSitter(user);
+    @Override
+    public List<Reservation> findByPetSitterAndConfirmation(Boolean confirmation) {
+            User petOwner = userService.findByUsername("petFriend");
+            return this.reservationRepository.findByPetSitterAndConfirmation(petOwner,confirmation);
     }
 
     @Override
@@ -79,10 +86,10 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setConfirmation(confirmationDto.getConfirmation());
     }
 
-    @Override
-    public List<Reservation> findByPetSitterAndCategories(Long petSitterId, List<Long> categories) {
-        User user = this.userService.getById(petSitterId);
-        List<Category> categoryList = this.categoryRepository.findAllById(categories);
-        return this.reservationRepository.findAllByPetSitterAndCategoriesIn(user, Collections.singleton(categoryList));
-    }
+//    @Override
+//    public List<Reservation> findByPetSitterAndCategories(Long petSitterId, List<Long> categories) {
+//        User user = this.userService.getById(petSitterId);
+//        List<Category> categoryList = this.categoryRepository.findAllById(categories);
+//        return this.reservationRepository.findAllByPetSitterAndCategoriesIn(user, Collections.singleton(categoryList));
+//    }
 }

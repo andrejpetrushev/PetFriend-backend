@@ -7,11 +7,7 @@ import java.util.List;
 
 @Data
 public class ReservationDto {
-    private Long sitterId;
-
-    private Long ownerId;
-
-    private List<Long> categories;
+    private String sitter;
 
     private LocalDate date;
 }

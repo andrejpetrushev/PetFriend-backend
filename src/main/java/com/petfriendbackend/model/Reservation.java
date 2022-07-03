@@ -26,9 +26,6 @@ public class Reservation {
     @OneToOne
     private User petOwner;
 
-    @OneToMany
-    private List<Category> categories;
-
     private LocalDate date;
 
     private Boolean confirmation;

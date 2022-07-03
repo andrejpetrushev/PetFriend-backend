@@ -6,6 +6,7 @@ import com.petfriendbackend.model.User;
 import com.petfriendbackend.model.dto.ConfirmationDto;
 import com.petfriendbackend.model.dto.ReservationDto;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +18,10 @@ public interface ReservationService {
 
     Reservation delete(Long id);
 
-    List<Reservation> findByUser(User user);
+    List<Reservation> findByPetOwner();
+    List<Reservation> findByPetSitterAndConfirmation(Boolean confirmation);
 
     void confirmReservation(ConfirmationDto confirmationDto);
 
-    List<Reservation> findByPetSitterAndCategories(Long petSitterId, List<Long> categories);
+//    List<Reservation> findByPetSitterAndCategories(Long petSitterId, List<Long> categories);
 }

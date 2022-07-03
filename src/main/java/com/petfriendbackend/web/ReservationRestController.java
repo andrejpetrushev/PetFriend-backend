@@ -39,18 +39,29 @@ public class ReservationRestController {
         this.reservationService.confirmReservation(confirmationDto);
     }
 
-    @GetMapping("/byUser")
-    public ResponseEntity<List<Reservation>> findByUser(Principal principal) {
-        User user = this.userService.findByUsername(principal.getName());
-        List<Reservation> reservations = this.reservationService.findByUser(user);
-
+    @GetMapping("/byPetOwner")
+    public ResponseEntity<List<Reservation>> findByPetOwner() {
+        List<Reservation> reservations = this.reservationService.findByPetOwner();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/byPetSitterAndCategories")
-    public ResponseEntity<List<Reservation>> findByPetSitterAndCategories(@RequestBody ReservationDto reservationDto) {
-        List<Reservation> reservations=this.reservationService.findByPetSitterAndCategories(reservationDto.getSitterId(),
-                reservationDto.getCategories());
+    @PostMapping("/byPetFriend")
+    public ResponseEntity<List<Reservation>> findByPetFriend(@RequestBody ConfirmationDto confirmationDto) {
+        List<Reservation> reservations = this.reservationService.findByPetSitterAndConfirmation(confirmationDto.getConfirmation());
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+
+    @PostMapping("/delete")
+    public void deleteReservation(@RequestParam Long id) {
+        this.reservationService.delete(id);
+    }
+
+//    @GetMapping("/byPetSitterAndCategories")
+//    public ResponseEntity<List<Reservation>> findByPetSitterAndCategories(@RequestBody ReservationDto reservationDto) {
+//        List<Reservation> reservations=this.reservationService.findByPetSitterAndCategories(reservationDto.getSitterId(),
+//                reservationDto.getCategories());
+//        return new ResponseEntity<>(reservations, HttpStatus.OK);
+//    }
+//
+
 }

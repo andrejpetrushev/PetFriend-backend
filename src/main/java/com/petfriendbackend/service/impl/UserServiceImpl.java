@@ -144,4 +144,9 @@ public class UserServiceImpl implements UserService {
         }
         return userRating;
     }
+
+    @Override
+    public User findByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName).get();
+    }
 }
