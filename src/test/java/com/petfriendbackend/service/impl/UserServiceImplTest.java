@@ -82,21 +82,18 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetAll() {
-        System.out.println(this.userRepository.findAll());
         List<User> userList = this.userService.getAll();
         assertEquals(1, userList.size());
     }
 
     @Test
     public void testGetById() {
-        System.out.println(this.userRepository.findAll());
         User user = this.userService.getById(USER_ID);
         assertEquals(USER_ID, user.getId());
     }
 
     @Test
     public void testRegister() {
-        System.out.println(this.userRepository.findAll());
         UserDto userDto = getUserDto();
         this.userService.register(userDto);
 
@@ -105,7 +102,6 @@ public class UserServiceImplTest {
 
     @Test
     public void testUpdate() {
-        System.out.println(this.userRepository.findAll());
         UserDto userDto = getUserDto();
         User user = this.userService.update(USER_ID, userDto);
 
