@@ -1,7 +1,6 @@
 package com.petfriendbackend.service.impl;
 
 import com.petfriendbackend.model.*;
-import com.petfriendbackend.model.dto.ReservationDto;
 import com.petfriendbackend.repository.ReservationRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,15 +60,6 @@ public class ReservationServiceImplTest {
         reservation.setDate(RESERVATION_DATE);
         reservation.setPetOwner(petOwner);
         reservation.setPetSitter(petSitter);
-
-        return reservation;
-    }
-
-    private ReservationDto getReservationDto() {
-        ReservationDto reservation = new ReservationDto();
-        reservation.setSitterId(RESERVATION_SITTER_ID);
-        reservation.setOwnerId(RESERVATION_OWNER_ID);
-        reservation.setDate(RESERVATION_DATE);
 
         return reservation;
     }
